@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# Seed Crafty's initial admin credentials on first start.
+#
+# Crafty reads app/config/default.json (if present) to create the first
+# admin user. We generate it from Umbrel's per-install APP_PASSWORD so the
+# credentials shown in the Umbrel app page ("admin" + app password) work
+# out of the box, without scraping logs or reading default-creds.txt.
+#
+# Only writes when the file does not exist, so a password changed in the
+# panel afterwards is never overwritten on restart.
+
+APP_DIR="${APP_DATA_DIR:-$(readlink -f "$(dirname "${BASH_SOURCE[0]}")/..")}"
+CRAFTY_CONFIG_DIR="${APP_DIR}/data/config"
+CRAFTY_DEFAULT_FILE="${CRAFTY_CONFIG_DIR}/default.json"
+
+mkdir -p "${CRAFTY_CONFIG_DIR}"
+
+if [ -f "${CRAFTY_DEFAULT_FILE}" ]; then
+  echo "crafty pre-start: admin credentials already seeded; skipping"
+  exit 0
+fi
+
+if [ -z "${APP_PASSWORD:-}" ]; then
+  echo "crafty pre-start: APP_PASSWORD is not set; cannot seed admin credentials" >&2
+  exit 1
+fi
+
+echo "crafty pre-start: seeding initial admin credentials"
+cat > "${CRAFTY_DEFAULT_FILE}" <<EOF
+{
+	"username": "admin",
+	"password": "${APP_PASSWORD}"
+}
+EOF
+
+chmod 664 "${CRAFTY_DEFAULT_FILE}"

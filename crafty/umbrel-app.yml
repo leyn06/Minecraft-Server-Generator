@@ -1,0 +1,32 @@
+manifestVersion: 1
+id: crafty
+category: automation
+name: Crafty Controller
+version: "4.11.0"
+tagline: Create and manage Minecraft servers like a hosting service
+description: >-
+  Crafty Controller is a web panel to create, host, and manage multiple Minecraft servers from your Umbrel, like a mini Modrinth or Minestrator on your own device.
+
+
+  Create Java or Bedrock servers from the dashboard, pick your server type and version, watch the live console, upload worlds and mods with the built-in file manager, schedule tasks, and take backups.
+
+
+  First run: log in with username `admin` and your Umbrel app password.
+
+
+  Game ports published by this app: `25565` (Java, use this for your main server), `25500-25509` (extra Java servers), and `19132/udp` (Bedrock). When creating a server in the panel, assign it one of these ports so friends can connect with `umbrel.local:<port>`.
+developer: Crafty Controller (Arcadia Technology)
+website: https://craftycontrol.com/
+dependencies: []
+repo: https://gitlab.com/crafty-controller/crafty-4
+support: https://craftycontrol.com/
+port: 28565
+gallery: []
+path: ""
+defaultUsername: admin
+deterministicPassword: true
+releaseNotes: ""
+backupIgnore:
+  - data/logs/*
+submitter: Leyn13
+submission: https://github.com/leyn06/Minecraft-Server-Generator
