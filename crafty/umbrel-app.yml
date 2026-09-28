@@ -8,13 +8,16 @@ description: >-
   Crafty Controller is a web panel to create, host, and manage multiple Minecraft servers from your Umbrel, like a mini Modrinth or Minestrator on your own device.
 
 
-  Create Java or Bedrock servers from the dashboard, pick your server type and version, watch the live console, upload worlds and mods with the built-in file manager, schedule tasks, and take backups.
+  Create Java or Bedrock servers from the dashboard, pick your server type and version, watch the live console, upload worlds and modpacks with the built-in file manager, schedule tasks, and take backups. Each server gets its own RAM allocation (JVM max heap), and the dashboard shows live CPU and memory usage per server.
 
 
   First run: log in with username `admin` and your Umbrel app password.
 
 
-  Game ports published by this app: `25565` (Java, use this for your main server), `25500-25509` (extra Java servers), and `19132/udp` (Bedrock). When creating a server in the panel, assign it one of these ports so friends can connect with `umbrel.local:<port>`.
+  Game ports published by this app: `25565` (Java, use this for your main server), `25500-25509` (extra Java servers), `19132/udp` (Bedrock), and `28123` for the Dynmap web map if you install that plugin. When creating a server in the panel, assign it one of these ports so friends can connect with `umbrel.local:<port>`.
+
+
+  To install a Modrinth/CurseForge modpack, import its zip through the panel's import wizard (or drop it in the app's `data/import` folder): Crafty unpacks it and generates the server launcher for you.
 developer: Crafty Controller (Arcadia Technology)
 website: https://craftycontrol.com/
 dependencies: []

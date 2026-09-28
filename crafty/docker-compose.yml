@@ -18,12 +18,18 @@ services:
   crafty:
     image: arcadiatechnology/crafty-4:4.11.0@sha256:7b6e87514259549647e15ceeaf73d238792e6d77e2c79fc744d5badc8d6e997c
     restart: on-failure
+    # Crafty spawns each Minecraft server as a child process. init reaps
+    # zombie java processes, and the long stop grace period lets worlds
+    # save cleanly on stop instead of being SIGKILLed after 10s.
+    init: true
+    stop_grace_period: 5m
     environment:
       TZ: ${TZ:-Etc/UTC}
     ports:
       - "25565:25565" # Minecraft Java (main server)
       - "25500-25509:25500-25509" # Minecraft Java (extra servers)
       - "19132:19132/udp" # Minecraft Bedrock
+      - "28123:8123" # Dynmap web map (optional plugin, umbrel.local:28123)
     volumes:
       - ${APP_DATA_DIR}/data/config:/crafty/app/config
       - ${APP_DATA_DIR}/data/servers:/crafty/servers
