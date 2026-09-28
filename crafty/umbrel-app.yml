@@ -13,7 +13,7 @@ description: >-
 
   First run: log in with username `admin` and your Umbrel app password.
 
-Pair it with the Modpack Importer app to import modpacks, mods, plugins and maps from Modrinth, CurseForge and SpigotMC in one click.
+  Pair it with the Modpack Importer app to import modpacks, plugins and maps from Modrinth, CurseForge and SpigotMC in one click.
 
 
   Game ports published by this app: `25565` (Java, use this for your main server), `25500-25509` (extra Java servers), `19132/udp` (Bedrock), and `28123` for the Dynmap web map if you install that plugin. When creating a server in the panel, assign it one of these ports so friends can connect with `umbrel.local:<port>`.
