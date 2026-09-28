@@ -27,3 +27,4 @@ vendor/
 tmp/
 temp/
 *.tmp
+__pycache__/
