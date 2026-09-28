@@ -1,0 +1,34 @@
+manifestVersion: 1
+id: modpack-importer
+category: automation
+name: Modpack Importer
+version: "1.0.0"
+tagline: Import modpacks, mods, plugins and maps from Modrinth, CurseForge and SpigotMC into Crafty
+description: >-
+  A companion app for Crafty Controller: import Minecraft content from the big hosting-style catalogs with one click.
+
+
+  Paste a Modrinth or CurseForge modpack link (or search Modrinth directly in the page), pick the Java version, and the importer downloads the full server: mod loader (Forge/Fabric/Quilt), mods, configs and overrides, with client-only mods automatically excluded.
+
+
+  You can also add extra Modrinth mods or plugins by name, SpigotMC plugins by resource ID, and a world map by URL. The finished, ready-to-run server is dropped straight into Crafty's import folder: open Crafty, import, play.
+
+
+  Requires the Crafty Controller app.
+developer: Leyn13
+website: https://github.com/leyn06/Minecraft-Server-Generator
+dependencies:
+  - crafty
+repo: https://github.com/leyn06/Minecraft-Server-Generator
+support: https://github.com/leyn06/Minecraft-Server-Generator
+port: 28124
+gallery: []
+path: ""
+releaseNotes: ""
+backupIgnore:
+  - data/scratch-java21/*
+  - data/scratch-java17/*
+  - data/queue/*
+  - data/logs/*
+submitter: Leyn13
+submission: https://github.com/leyn06/Minecraft-Server-Generator

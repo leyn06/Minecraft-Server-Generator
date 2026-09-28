@@ -1,0 +1,57 @@
+services:
+  app_proxy:
+    environment:
+      APP_HOST: modpack-importer_web_1
+      APP_PORT: 8080
+
+  # Tiny stdlib-only web UI (Python). Writes import requests to the queue
+  # and shows progress.
+  web:
+    image: python:3.12-slim@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f
+    restart: on-failure
+    command: python /app/app.py
+    environment:
+      TZ: ${TZ:-Etc/UTC}
+    volumes:
+      - ${APP_DATA_DIR}/web:/app:ro
+      - ${APP_DATA_DIR}/data/queue:/queue
+      - ${APP_DATA_DIR}/data/output:/out
+      - ${APP_DATA_DIR}/data/logs:/out-logs
+
+  # Import workers based on itzg/minecraft-server. Each worker watches the
+  # queue for its Java version, runs the official image setup in
+  # SETUP_ONLY mode to download the modpack server, then drops the result
+  # into Crafty's import folder.
+  worker-java21:
+    image: itzg/minecraft-server:java21@sha256:7dd4e72e6daf7c98aedf39fd9c9744b4036dee0d9a8b49db4009919b5d2ea89d
+    restart: on-failure
+    entrypoint: ["/bin/bash", "/worker/worker-loop.sh"]
+    environment:
+      TZ: ${TZ:-Etc/UTC}
+      JAVA_TAG: java21
+    volumes:
+      - ${APP_DATA_DIR}/worker:/worker:ro
+      - ${APP_DATA_DIR}/data/queue:/queue
+      - ${APP_DATA_DIR}/data/output:/out
+      - ${APP_DATA_DIR}/data/logs:/out-logs
+      - ${APP_DATA_DIR}/data/scratch-java21:/data
+      - ${UMBREL_ROOT}/app-data/crafty/data/import:/crafty-import
+    healthcheck:
+      disable: true
+
+  worker-java17:
+    image: itzg/minecraft-server:java17@sha256:2308a35443926ad21e84efe6a8900a4260eff304ce4f7a41e1fc922d2a795f5a
+    restart: on-failure
+    entrypoint: ["/bin/bash", "/worker/worker-loop.sh"]
+    environment:
+      TZ: ${TZ:-Etc/UTC}
+      JAVA_TAG: java17
+    volumes:
+      - ${APP_DATA_DIR}/worker:/worker:ro
+      - ${APP_DATA_DIR}/data/queue:/queue
+      - ${APP_DATA_DIR}/data/output:/out
+      - ${APP_DATA_DIR}/data/logs:/out-logs
+      - ${APP_DATA_DIR}/data/scratch-java17:/data
+      - ${UMBREL_ROOT}/app-data/crafty/data/import:/crafty-import
+    healthcheck:
+      disable: true
